@@ -18,8 +18,8 @@ CREATE TABLE `mensagem_usuario` (
     `conteudo` TEXT NOT NULL,
     `envio_data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `recebe_data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cod_usu_remetente) REFERENCES usuarios(cod_usuario),
-    FOREIGN KEY (cod_usu_destinatario) REFERENCES usuarios(cod_usuario)
+    FOREIGN KEY (cod_usu_remetente) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL,
+    FOREIGN KEY (cod_usu_destinatario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL
 ) Engine=InnoDB;
 
 CREATE TABLE `grupo` ( 
@@ -45,8 +45,8 @@ CREATE TABLE `mensagem_grupo` (
     `conteudo` VARCHAR(255) NOT NULL,
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(cod_msg, cod_grupo, cod_usuario),
-    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo),
-    FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario)
+    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE,
+    FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL
 ) Engine=InnoDB;
 
 CREATE TABLE `postagem_grupo` (
