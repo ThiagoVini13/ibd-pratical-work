@@ -94,7 +94,7 @@ CREATE TABLE `categoria` (
 )  ENGINE=INNODB;
 
 CREATE TABLE `categoria_grupo` (
-    `cod_categoria` INT NOT NULL AUTO_INCREMENT,
+    `cod_categoria` INT NOT NULL,
     `cod_grupo` INT NOT NULL,
     PRIMARY KEY (cod_categoria , cod_grupo),
     FOREIGN KEY (cod_categoria)
