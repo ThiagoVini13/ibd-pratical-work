@@ -39,7 +39,7 @@ CREATE TABLE `interesses_usuario` (
     `cod_usuario` INT NOT NULL,
     PRIMARY KEY (cod_interesse , cod_usuario),
     FOREIGN KEY (cod_interesse)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES interesse (cod_interesse)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_usuario)
         REFERENCES usuarios (cod_usuario)
