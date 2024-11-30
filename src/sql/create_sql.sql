@@ -87,18 +87,12 @@ CREATE TABLE `dthr_msg_dest` (
         ON DELETE CASCADE
 )  ENGINE=INNODB;
 
-CREATE TABLE `categoria` (
-    `cod_categoria` INT NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(50),
-    PRIMARY KEY (cod_categoria)
-)  ENGINE=INNODB;
-
 CREATE TABLE `categoria_grupo` (
     `cod_categoria` INT NOT NULL,
     `cod_grupo` INT NOT NULL,
     PRIMARY KEY (cod_categoria , cod_grupo),
     FOREIGN KEY (cod_categoria)
-        REFERENCES categoria (cod_categoria)
+        REFERENCES interesse (cod_interesse)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_grupo)
         REFERENCES grupo (cod_grupo)
