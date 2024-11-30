@@ -6,7 +6,7 @@ CREATE TABLE `usuarios` (
     `cod_usuario` INT NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(255) NOT NULL,
     `data_nascimento` DATE NOT NULL,
-    'foto_perfil' BLOB,
+    `foto_perfil` BLOB,
     `biografia` VARCHAR(255),
     `localizacao` VARCHAR(255),
     PRIMARY KEY (cod_usuario)
@@ -32,9 +32,9 @@ CREATE TABLE `grupo` (
     FOREIGN key(cod_criador) REFERENCES usuarios(cod_usuario)
 ) Engine=InnoDB;
 
-CREATE TABLE 'categoria_grupo'(
+CREATE TABLE `categoria_grupo`(
     `cod_grupo` INT NOT NULL,
-    'categoria' VARCHAR(50),
+    `categoria` VARCHAR(50),
     PRIMARY KEY (cod_grupo, categoria),
     FOREIGN KEY (cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE
 ) Engine =InnoDB;
@@ -54,7 +54,7 @@ CREATE TABLE `postagem_grupo` (
     `cod_post_grupo` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `cod_grupo`INT NOT NULL,
     `cod_usuario` INT NOT NULL,
-    'texto' VARCHAR(1000) NOT NULL,
+    `texto` VARCHAR(1000) NOT NULL,
     `imagem` MEDIUMBLOB,
     `video` LONGBLOB,
     `gif` BLOB,
@@ -90,7 +90,7 @@ CREATE TABLE `curtida_grupo` (
 CREATE TABLE `postagem_usuario` (
     `cod_post` INT NOT NULL AUTO_INCREMENT,
     `cod_usuario` INT NOT NULL,
-    'texto' VARCHAR(256) NOT NULL,
+    `texto` VARCHAR(256) NOT NULL,
     `imagem` MEDIUMBLOB,
     `video` LONGBLOB,
     `gif` BLOB,
