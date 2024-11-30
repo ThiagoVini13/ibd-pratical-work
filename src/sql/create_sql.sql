@@ -6,21 +6,36 @@ CREATE TABLE `usuarios` (
     `cod_usuario` INT NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(255) NOT NULL,
     `data_nascimento` DATE NOT NULL,
-    `foto_perfil` BLOB,
     `biografia` VARCHAR(255),
     `localizacao` VARCHAR(255),
+    `foto_perfil` BLOB,
     PRIMARY KEY (cod_usuario)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `mensagem_usuario` (
-    `cod_mensagem` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `cod_mensagem` INT NOT NULL AUTO_INCREMENT,
     `cod_usu_remetente` INT DEFAULT NULL,
     `cod_usu_destinatario` INT DEFAULT NULL,
     `conteudo` VARCHAR(255) NOT NULL,
     `envio_data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `recebe_data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(cod_mensagem),
     FOREIGN KEY (cod_usu_remetente) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL,
     FOREIGN KEY (cod_usu_destinatario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL
+) Engine=InnoDB;
+
+CREATE TABLE `interesse`(
+    `cod_interesse`INT NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(255),
+    PRIMARY key(cod_interesse)
+) Engine=InnoDB;
+
+CREATE TABLE `interesses_usuario` (
+    `cod_interesse` INT NOT NULL AUTO_INCREMENT,
+    `cod_usuario` INT NOT NULL,
+    PRIMARY KEY(cod_interesse, cod_usuario),
+    FOREIGN KEY(cod_interesse) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE,
+    FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE
 ) Engine=InnoDB;
 
 CREATE TABLE `grupo` ( 
@@ -32,35 +47,44 @@ CREATE TABLE `grupo` (
     FOREIGN key(cod_criador) REFERENCES usuarios(cod_usuario)
 ) Engine=InnoDB;
 
-CREATE TABLE `categoria_grupo`(
-    `cod_grupo` INT NOT NULL,
-    `categoria` VARCHAR(50),
-    PRIMARY KEY (cod_grupo, categoria),
-    FOREIGN KEY (cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE
-) Engine =InnoDB;
-
 CREATE TABLE `mensagem_grupo` (
     `cod_msg` INT NOT NULL AUTO_INCREMENT,
     `cod_grupo` INT NOT NULL,
     `cod_usuario` INT DEFAULT NULL,
     `conteudo` VARCHAR(255) NOT NULL,
     `data_hora_envio` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(cod_msg, cod_grupo, cod_usuario),
-    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo),
+    PRIMARY KEY(cod_msg),
+    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE,
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL
 ) Engine=InnoDB;
 
 CREATE TABLE `dthr_msg_dest` (
     `cod_msg` INT NOT NULL,
-    `cod_usuario` INT DEFAULT NULL, 
+    `cod_grupo` INT NOT NULL,
+    `cod_usuario` INT NOT NULL, 
     `data_hora_recebe` DATETIME DEFAULT NULL,
-    PRIMARY KEY(cod_msg, cod_usuario),
+    PRIMARY KEY(cod_msg, cod_usuario, cod_grupo),
+    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo),
     FOREIGN KEY(cod_msg) REFERENCES mensagem_grupo(cod_msg) ON DELETE CASCADE,
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE
 ) Engine=InnoDB;
 
+CREATE TABLE `categoria`(
+    `cod_categoria` INT NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(50),
+    PRIMARY KEY(cod_categoria)
+) Engine=InnoDB;
+
+CREATE TABLE `categoria_grupo`(
+    `cod_categoria` INT NOT NULL AUTO_INCREMENT,
+    `cod_grupo` INT NOT NULL, 
+    PRIMARY KEY (cod_categoria, cod_grupo),
+    FOREIGN KEY (cod_grupo) REFERENCES categoria(cod_categoria) ON DELETE SET NULL
+    FOREIGN KEY (cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE
+) Engine=InnoDB;
+
 CREATE TABLE `postagem_grupo` (
-    `cod_post_grupo` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `cod_post` INT NOT NULL AUTO_INCREMENT,
     `cod_grupo`INT NOT NULL,
     `cod_usuario` INT NOT NULL,
     `texto` VARCHAR(1000) NOT NULL,
@@ -68,6 +92,7 @@ CREATE TABLE `postagem_grupo` (
     `video` LONGBLOB,
     `gif` BLOB,
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(cod_post, cod_grupo  , cod_usuario),
     FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE,
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE
 
@@ -151,11 +176,4 @@ CREATE TABLE `participantes_comunidade` (
     PRIMARY KEY(cod_usuario, cod_grupo),
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE,
     FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE
-) Engine=InnoDB;
-
-CREATE TABLE `interesses_usuario` (
-    `cod_usuario` INT NOT NULL,
-    `nome` varchar(255) NOT NULL,
-    PRIMARY KEY(cod_usuario, nome),
-    FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE
 ) Engine=InnoDB;
