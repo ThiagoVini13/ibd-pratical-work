@@ -35,7 +35,7 @@ CREATE TABLE `interesse` (
 )  ENGINE=INNODB;
 
 CREATE TABLE `interesses_usuario` (
-    `cod_interesse` INT NOT NULL AUTO_INCREMENT,
+    `cod_interesse` INT NOT NULL,
     `cod_usuario` INT NOT NULL,
     PRIMARY KEY (cod_interesse , cod_usuario),
     FOREIGN KEY (cod_interesse)
