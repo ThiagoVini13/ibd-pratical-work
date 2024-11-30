@@ -44,10 +44,19 @@ CREATE TABLE `mensagem_grupo` (
     `cod_grupo` INT NOT NULL,
     `cod_usuario` INT DEFAULT NULL, -- CASO O USUÁRIO SEJA EXCLUIDO, A MSG CONTINUA
     `conteudo` VARCHAR(255) NOT NULL,
-    `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `data_hora_envio` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(cod_msg, cod_grupo, cod_usuario),
     FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo),
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL
+) Engine=InnoDB;
+
+CREATE TABLE `dthr_msg_dest` ( --data_hora que a mensagem chega para os destinatários do grupo
+    `cod_msg` INT NOT NULL,
+    `cod_usuario` INT DEFAULT NULL, -- CASO O USUÁRIO SEJA EXCLUIDO, O REGISTRO É EXCLUIDO
+    `data_hora_recebe` DATETIME DEFAULT NULL, -- NÃO COLOCOU CURRENT_TIMESTAMP PORQUE UTILIZARÁ UPDATE
+    PRIMARY KEY(cod_msg, cod_usuario),
+    FOREIGN KEY(cod_msg) REFERENCES mensagem_grupo(cod_msg) ON DELETE CASCADE,
+    FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE
 ) Engine=InnoDB;
 
 CREATE TABLE `postagem_grupo` (
@@ -72,7 +81,7 @@ CREATE TABLE `comentario_grupo` (
     `comentario` VARCHAR(255) NOT NULL,
     PRIMARY KEY(cod_grupo, cod_usuario, cod_post_grupo, data_hora),
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL,
-    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE
+    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE,
     FOREIGN KEY(cod_post_grupo) REFERENCES postagem_grupo(cod_post_grupo) ON DELETE CASCADE
 ) Engine=InnoDB;
 
@@ -83,7 +92,7 @@ CREATE TABLE `curtida_grupo` (
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(cod_grupo, cod_usuario, cod_post_grupo),
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE,
-    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE
+    FOREIGN KEY(cod_grupo) REFERENCES grupo(cod_grupo) ON DELETE CASCADE,
     FOREIGN KEY(cod_post_grupo) REFERENCES postagem_grupo(cod_post_grupo) ON DELETE CASCADE
 ) Engine=InnoDB;
 
