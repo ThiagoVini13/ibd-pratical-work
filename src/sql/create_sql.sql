@@ -14,7 +14,7 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `mensagem_usuario` (
     `cod_mensagem` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `cod_usu_remetente` INT DEFAULT NULL, --Foi escolhido default NULL pois caso o usuário seja excluido, as mesagens com o destinatário permancem
+    `cod_usu_remetente` INT DEFAULT NULL,
     `cod_usu_destinatario` INT DEFAULT NULL,
     `conteudo` VARCHAR(255) NOT NULL,
     `envio_data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -42,7 +42,7 @@ CREATE TABLE `categoria_grupo`(
 CREATE TABLE `mensagem_grupo` (
     `cod_msg` INT NOT NULL AUTO_INCREMENT,
     `cod_grupo` INT NOT NULL,
-    `cod_usuario` INT DEFAULT NULL, -- CASO O USUÁRIO SEJA EXCLUIDO, A MSG CONTINUA
+    `cod_usuario` INT DEFAULT NULL,
     `conteudo` VARCHAR(255) NOT NULL,
     `data_hora_envio` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(cod_msg, cod_grupo, cod_usuario),
@@ -50,10 +50,10 @@ CREATE TABLE `mensagem_grupo` (
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE SET NULL
 ) Engine=InnoDB;
 
-CREATE TABLE `dthr_msg_dest` ( --data_hora que a mensagem chega para os destinatários do grupo
+CREATE TABLE `dthr_msg_dest` (
     `cod_msg` INT NOT NULL,
-    `cod_usuario` INT DEFAULT NULL, -- CASO O USUÁRIO SEJA EXCLUIDO, O REGISTRO É EXCLUIDO
-    `data_hora_recebe` DATETIME DEFAULT NULL, -- NÃO COLOCOU CURRENT_TIMESTAMP PORQUE UTILIZARÁ UPDATE
+    `cod_usuario` INT DEFAULT NULL, 
+    `data_hora_recebe` DATETIME DEFAULT NULL,
     PRIMARY KEY(cod_msg, cod_usuario),
     FOREIGN KEY(cod_msg) REFERENCES mensagem_grupo(cod_msg) ON DELETE CASCADE,
     FOREIGN KEY(cod_usuario) REFERENCES usuarios(cod_usuario) ON DELETE CASCADE
@@ -74,8 +74,8 @@ CREATE TABLE `postagem_grupo` (
 ) Engine=InnoDB;
 
 CREATE TABLE `comentario_grupo` (
-    `cod_grupo` INT NOT NULL, -- Caso o grupo seja excluido, todos os comentarios nas postagens são excluidas
-    `cod_usuario` INT DEFAULT NULL, --Caso o usuário seja excluido, os comentários permanecem
+    `cod_grupo` INT NOT NULL, 
+    `cod_usuario` INT DEFAULT NULL,
     `cod_post_grupo` INT NOT NULL,
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `comentario` VARCHAR(255) NOT NULL,
