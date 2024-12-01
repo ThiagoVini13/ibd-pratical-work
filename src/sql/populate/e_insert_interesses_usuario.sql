@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO interesses_usuario (cod_interesse, cod_usuario) VALUES
 (206, 217),
 (151, 4482),

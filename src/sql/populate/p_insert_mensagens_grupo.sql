@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO mensagem_grupo (cod_grupo, cod_usuario, conteudo, data_hora_envio) VALUES
 (3191, 2395, 'Gostaria de saber mais sobre o tópico', '2024-11-28 17:22:59.326286'),
 (4395, 1441, 'Vamos discutir mais sobre isso', '2024-12-01 13:38:56.072390'),

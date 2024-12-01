@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO participantes_comunidade (cod_usuario, cod_grupo) VALUES
 (452, 1),
 (772, 1),

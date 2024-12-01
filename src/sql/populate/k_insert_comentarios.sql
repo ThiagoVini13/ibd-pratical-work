@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO comentario (cod_usuario, cod_post, conteudo, data_hora) VALUES
 (1795, 62546, 'Isso é exatamente o que eu precisava saber.', '2025-01-01 03:12:38'),
 (4285, 62546, 'Concordo plenamente!', '2025-01-18 02:01:54'),

@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO `grupo` (`cod_criador`, `nome`, `descricao`) VALUES
 (337, 'Ribeiro - EI', 'A arte de realizar seus sonhos naturalmente'),
 (3725, 'Mendes Ltda.', 'A simplicidade de atingir seus objetivos simplesmente'),

@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO mensagem_usuario (cod_usu_remetente, cod_usu_destinatario, conteudo, envio_data_hora, recebe_data_hora) VALUES
 (2312, 538, 'Pode me ligar quando tiver tempo?', '2024-11-10 06:29:10', '2024-11-10 06:59:47'),
 (4855, 1498, 'Isso foi incrível, obrigado!', '2024-11-16 17:04:37', '2024-11-16 17:18:36'),

@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO compartilhamento (cod_usuario, cod_post, comentario, data_hora) VALUES
 (720, 109985, 'Obrigado por compartilhar! #925', '2025-01-10 23:39:49'),
 (952, 45096, 'Isso não está funcionando para mim. #948', '2025-01-22 20:09:33'),

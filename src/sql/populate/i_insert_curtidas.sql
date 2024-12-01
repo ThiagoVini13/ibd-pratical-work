@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO curtida (cod_usuario, cod_post, data_hora) VALUES
 (2459, 23772, '2023-08-09 12:51:58'),
 (391, 34477, '2023-12-16 16:05:53'),

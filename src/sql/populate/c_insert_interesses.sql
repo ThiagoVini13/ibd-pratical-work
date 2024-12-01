@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO interesse (nome) VALUES
 ('Arquitetura sustentável'),
 ('Economia'),

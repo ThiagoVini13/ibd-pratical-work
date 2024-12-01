@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO comentario_grupo (cod_grupo, cod_usuario, cod_post_grupo, data_hora, comentario) VALUES
 (470, 241, 1, '2024-11-04 04:46:49', 'Que postagem fantástica!'),
 (470, 3230, 1, '2024-11-10 00:52:49', 'Muito bom! Adorei essa ideia.'),

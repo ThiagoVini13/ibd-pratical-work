@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO postagem_grupo (cod_grupo, cod_usuario, texto, imagem, video, gif, data_hora) VALUES
 (470, 2840, 'Preciso de ajuda com um projeto. Alguma dica?', NULL, NULL, NULL, '2024-11-28 06:27:36'),
 (3962, 4796, 'Alguém sabe quando será o próximo evento?', NULL, NULL, NULL, '2024-11-19 03:08:36'),

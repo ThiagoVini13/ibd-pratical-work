@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO categoria_grupo (cod_categoria, cod_grupo) VALUES
 (3, 1),
 (32, 1),

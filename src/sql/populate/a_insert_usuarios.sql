@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO usuarios (nome, data_nascimento, biografia, localizacao, foto_perfil) VALUES
 ('Karla Pierce', '1977-02-26', 'Mestre em conectar pessoas. Acredito que as melhores relações são construídas com respeito e empatia. Amo fazer amigos por todo o mundo.', 'Fortaleza, CE', NULL),
 ('Mrs. Janice Price DDS', '1982-09-22', 'Exploradora digital e entusiasta do futuro. Adoro aprender sobre IA e tecnologias emergentes. Sou uma curiosa por natureza.', 'Manaus, AM', NULL),

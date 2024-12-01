@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO curtida_grupo (cod_grupo, cod_usuario, cod_post_grupo, data_hora) VALUES
 (4792, 1632, 4792, '2024-11-04 15:29:20.284827'),
 (4022, 3880, 4022, '2024-11-14 23:44:54.758926'),

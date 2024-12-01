@@ -1,3 +1,4 @@
+USE `ibd-pratical-work`;
 INSERT INTO conexao (cod_usuario1, cod_usuario2) VALUES
 (1, 4868),
 (1, 4444),
