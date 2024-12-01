@@ -1,4 +1,4 @@
-INSERT INTO participantes_comunidade (cod_usuario, cod_grupo) VALUES
+INSERT INTO participante_comunidade (cod_usuario, cod_grupo) VALUES
 (452, 1),
 (772, 1),
 (235, 1),

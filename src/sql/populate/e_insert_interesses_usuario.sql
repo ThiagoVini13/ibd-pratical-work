@@ -1,4 +1,4 @@
-INSERT INTO interesses_usuario (cod_interesse, cod_usuario) VALUES
+INSERT INTO interesse_usuario (cod_interesse, cod_usuario) VALUES
 (206, 217),
 (151, 4482),
 (142, 4928),
