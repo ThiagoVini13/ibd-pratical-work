@@ -1,67 +1,168 @@
 import mysql.connector
-from mysql.connector import Error
+import asyncio
+import asyncpg
+import time
 
-# Função para conectar ao banco de dados MySQL
-def conectar_banco(host, usuario, senha, banco):
+# Função para se conectar ao MySQL e criar o banco de dados
+async def create_database_from_sql(host, user, password, sql_file):
     try:
-        conexao = mysql.connector.connect(
+        # Conectar ao MySQL (sem especificar um banco de dados ainda)
+        connection = mysql.connector.connect(
             host=host,
-            user=usuario,
-            password=senha,
-            database=banco
+            user=user,
+            password=password
         )
-        if conexao.is_connected():
-            print("Conectado ao banco de dados")
-            return conexao
-    except Error as e:
-        print(f"Erro ao conectar ao banco de dados: {e}")
-        return None
 
-# Função para executar um arquivo SQL no banco de dados
-def executar_sql_arquivo(conexao, arquivo_sql):
-    try:
-        cursor = conexao.cursor()
-        
-        # Lê o conteúdo do arquivo SQL
-        with open(arquivo_sql, 'r', encoding='utf-8') as file:
-            sql_script = file.read()
-        
-        # Executa o script SQL
-        for comando in sql_script.split(';'):
-            comando = comando.strip()
-            if comando:
-                cursor.execute(comando)
-                print(f"Executando: {comando}")
-        
-        # Confirma as alterações no banco de dados
-        conexao.commit()
-        print("Arquivo SQL executado com sucesso!")
-    except Error as e:
-        print(f"Erro ao executar o SQL: {e}")
-        conexao.rollback()
+        cursor = connection.cursor()
+
+        # Ler o conteúdo do arquivo SQL
+        with open(sql_file, 'r') as file:
+            sql = file.read()
+
+        # Executar as instruções SQL do arquivo
+        for statement in sql.split(';'):
+            if statement.strip():  # Ignorar strings vazias
+                cursor.execute(statement)
+
+        # Commit das mudanças
+        connection.commit()
+        print(f"Banco de dados criado e configurado com sucesso!")
+
+    except mysql.connector.Error as err:
+        print(f"Erro: {err}")
     finally:
-        cursor.close()
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
 
-# Função principal
-def main():
-    # Parâmetros de conexão
-    host = 'localhost'  # Endereço do servidor MySQL
-    usuario = 'root'  # Seu usuário do banco de dados
-    senha = 'sua_senha'  # Sua senha de acesso ao banco de dados
-    banco = 'seu_banco'  # Nome do banco de dados
 
-    # Caminho do arquivo SQL
-    arquivo_sql = 'caminho/do/seu/arquivo.sql'
+async def are_all_tables_empty(host, user, password, database):
+    try:
+        # Conectar ao banco de dados MySQL
+        connection = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
 
-    # Conectar ao banco de dados
-    conexao = conectar_banco(host, usuario, senha, banco)
+        cursor = connection.cursor()
 
-    if conexao:
-        # Executar o arquivo SQL
-        executar_sql_arquivo(conexao, arquivo_sql)
-        
-        # Fechar a conexão
-        conexao.close()
+        # Obter todas as tabelas do banco de dados
+        cursor.execute("SHOW TABLES")
+        tables = cursor.fetchall()
 
-if __name__ == '__main__':
-    main()
+        # Verificar se todas as tabelas estão vazias
+        for table in tables:
+            table_name = table[0]
+
+            # Verificar se a tabela está vazia
+            cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+            count = cursor.fetchone()[0]
+
+            if count > 0:
+                print(f"O script de população deve ser usado com todas as tabelas vazias")
+                return False  # Se qualquer tabela não estiver vazia, retorna False
+
+        print("Todas as tabelas estão vazias.")
+        return True  # Se todas as tabelas estiverem vazias, retorna True
+
+    except mysql.connector.Error as err:
+        print(f"Erro ao acessar o banco de dados: {err}")
+        return False
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+# Função para se conectar ao MySQL e criar o banco de dados
+
+async def populate_database_from_sql_files(host, user, password, database, sql_files):
+    try:
+        # Conectar ao MySQL
+        connection = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
+
+        cursor = connection.cursor()
+
+        # Iniciar a transação
+        connection.start_transaction()
+
+        # Loop sobre todos os arquivos SQL fornecidos
+        for sql_file in sql_files:
+            # Ler o conteúdo do arquivo SQL
+            with open(sql_file, 'r') as file:
+                sql = file.read()
+
+            # Executar as instruções SQL
+            for statement in sql.split(';'):
+                if statement.strip():  # Ignorar strings vazias
+                    cursor.execute(statement)
+
+        # Commit das mudanças
+        connection.commit()
+        print(f"Banco de dados populado com sucesso!")
+
+    except mysql.connector.Error as err:
+        # Se houver erro, fazer o rollback da transação
+        connection.rollback()
+        print(f"Erro: {err}")
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+
+# Usando a função
+host = 'localhost'
+user = 'root'
+password = '05.peDro12@'
+sql_file_create = './sql/createDatabase/create_database.sql'
+database = "ibd-pratical-work"
+
+async def main():
+    while(True):
+        print("-------------------------------------------------")
+        print("Pow, bicho! Seja bem-vindo!")
+        print("Escolha a opção desejada:")
+        print("1 - Criar o banco de dados")
+        print("2 - Popular o banco de dados")
+        print("3 - Sair")
+
+        resp = int(input("Insira a resposta: "))
+
+        if (resp==1):
+          await create_database_from_sql(host, user, password, sql_file_create)
+        elif(resp==2):
+            
+          if(await are_all_tables_empty(host,user,password,database)):
+            await populate_database_from_sql_files(host,user,password,database,[
+                "./sql/populate/a_insert_usuarios.sql",
+                "./sql/populate/b_insert_grupos.sql",
+                "./sql/populate/c_insert_interesses.sql",
+                "./sql/populate/d_insert_participantes_comunidade.sql",
+                "./sql/populate/e_insert_interesses_usuario.sql",
+                "./sql/populate/f_insert_categoria_grupo.sql",
+                "./sql/populate/g_insert_conexoes.sql",
+                "./sql/populate/h_insert_postagens_usuario.sql",
+                "./sql/populate/i_insert_curtidas.sql",
+                "./sql/populate/j_insert_compartilhamentos.sql",
+                "./sql/populate/k_insert_comentarios.sql",
+                "./sql/populate/l_insert_mensagens.sql",
+                "./sql/populate/m_insert_postagem_grupo.sql",
+                "./sql/populate/n_insert_comentarios_grupo.sql",
+                "./sql/populate/o_insert_curtidas_grupo_unicas.sql",
+                "./sql/populate/p_insert_mensagens_grupo.sql",
+                "./sql/populate/q_insert_dthr_msg_dest.sql"
+            ])
+        elif(resp==3):
+            exit()
+
+        time.sleep(2)
+    
+
+asyncio.run(main())
+
+
