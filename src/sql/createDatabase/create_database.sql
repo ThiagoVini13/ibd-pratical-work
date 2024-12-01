@@ -2,7 +2,7 @@ DROP DATABASE if EXISTS `ibd-pratical-work`;
 CREATE DATABASE `ibd-pratical-work`;
 USE `ibd-pratical-work`;
 
-CREATE TABLE `usuarios` (
+CREATE TABLE `usuario` (
     `cod_usuario` INT NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(255) NOT NULL,
     `data_nascimento` DATE NOT NULL,
@@ -21,10 +21,10 @@ CREATE TABLE `mensagem_usuario` (
     `recebe_data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (cod_mensagem),
     FOREIGN KEY (cod_usu_remetente)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE SET NULL,
     FOREIGN KEY (cod_usu_destinatario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE SET NULL
 )  ENGINE=INNODB;
 
@@ -34,7 +34,7 @@ CREATE TABLE `interesse` (
     PRIMARY KEY (cod_interesse)
 )  ENGINE=INNODB;
 
-CREATE TABLE `interesses_usuario` (
+CREATE TABLE `interesse_usuario` (
     `cod_interesse` INT NOT NULL,
     `cod_usuario` INT NOT NULL,
     PRIMARY KEY (cod_interesse , cod_usuario),
@@ -42,7 +42,7 @@ CREATE TABLE `interesses_usuario` (
         REFERENCES interesse (cod_interesse)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE
 )  ENGINE=INNODB;
 
@@ -53,7 +53,7 @@ CREATE TABLE `grupo` (
     `descricao` VARCHAR(255),
     PRIMARY KEY (cod_grupo),
     FOREIGN KEY (cod_criador)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
 )  ENGINE=INNODB;
 
 CREATE TABLE `mensagem_grupo` (
@@ -67,11 +67,11 @@ CREATE TABLE `mensagem_grupo` (
         REFERENCES grupo (cod_grupo)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE SET NULL
 )  ENGINE=INNODB;
 
-CREATE TABLE `dthr_msg_dest` (
+CREATE TABLE `dthr_msg_destinatario` (
     `cod_msg` INT NOT NULL,
     `cod_grupo` INT NOT NULL,
     `cod_usuario` INT NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE `dthr_msg_dest` (
         REFERENCES mensagem_grupo (cod_msg)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE
 )  ENGINE=INNODB;
 
@@ -113,7 +113,7 @@ CREATE TABLE `postagem_grupo` (
         REFERENCES grupo (cod_grupo)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE
 )  ENGINE=INNODB;
 
@@ -122,10 +122,10 @@ CREATE TABLE `comentario_grupo` (
     `cod_usuario` INT NOT NULL,
     `cod_post_grupo` INT NOT NULL,
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `comentario` VARCHAR(255) NOT NULL,
+    `conteudo` VARCHAR(255) NOT NULL,
     PRIMARY KEY (cod_grupo , cod_usuario , cod_post_grupo , data_hora),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_grupo)
         REFERENCES grupo (cod_grupo)
@@ -142,7 +142,7 @@ CREATE TABLE `curtida_grupo` (
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (cod_grupo , cod_usuario , cod_post_grupo),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_grupo)
         REFERENCES grupo (cod_grupo)
@@ -162,7 +162,7 @@ CREATE TABLE `postagem_usuario` (
     `data_hora` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (cod_post , cod_usuario),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE
 )  ENGINE=INNODB;
 
@@ -173,7 +173,7 @@ CREATE TABLE `compartilhamento` (
     `data_hora` DATETIME NOT NULL,
     PRIMARY KEY (cod_usuario , cod_post),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_post)
         REFERENCES postagem_usuario (cod_post)
@@ -187,7 +187,7 @@ CREATE TABLE `comentario` (
     `data_hora` DATETIME NOT NULL,
     PRIMARY KEY (cod_usuario , cod_post),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_post)
         REFERENCES postagem_usuario (cod_post)
@@ -200,7 +200,7 @@ CREATE TABLE `curtida` (
     `data_hora` DATETIME NOT NULL,
     PRIMARY KEY (cod_usuario , cod_post),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_post)
         REFERENCES postagem_usuario (cod_post)
@@ -212,19 +212,19 @@ CREATE TABLE `conexao` (
     `cod_usuario2` INT NOT NULL,
     PRIMARY KEY (cod_usuario1 , cod_usuario2),
     FOREIGN KEY (cod_usuario1)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_usuario2)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE
 )  ENGINE=INNODB;
 
-CREATE TABLE `participantes_comunidade` (
+CREATE TABLE `participante_comunidade` (
     `cod_usuario` INT NOT NULL,
     `cod_grupo` INT NOT NULL,
     PRIMARY KEY (cod_usuario , cod_grupo),
     FOREIGN KEY (cod_usuario)
-        REFERENCES usuarios (cod_usuario)
+        REFERENCES usuario (cod_usuario)
         ON DELETE CASCADE,
     FOREIGN KEY (cod_grupo)
         REFERENCES grupo (cod_grupo)
