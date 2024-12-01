@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 USE `ibd-pratical-work`;
 INSERT INTO participantes_comunidade (cod_usuario, cod_grupo) VALUES
+=======
+INSERT INTO participante_comunidade (cod_usuario, cod_grupo) VALUES
+>>>>>>> origin
 (452, 1),
 (772, 1),
 (235, 1),

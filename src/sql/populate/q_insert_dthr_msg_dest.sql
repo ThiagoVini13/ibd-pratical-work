@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 USE `ibd-pratical-work`;
 INSERT INTO dthr_msg_dest (cod_msg, cod_grupo, cod_usuario, data_hora_recebe) VALUES
+=======
+INSERT INTO dthr_msg_destinatario (cod_msg, cod_grupo, cod_usuario, data_hora_recebe) VALUES
+>>>>>>> origin
 (1, 3191, 2395, '2024-12-11 20:01:46'),
 (2, 4395, 1441, '2024-12-19 23:06:59'),
 (3, 3517, 1345, '2024-11-08 21:17:13'),
