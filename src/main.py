@@ -116,9 +116,9 @@ async def populate_database_from_sql_files(host, user, password, database, sql_f
             connection.close()
 
 # Usando a função
-host = ''
-user = ''
-password = ''
+host = 'localhost'
+user = 'root'
+password = '05.peDro12@'
 sql_file_create = './sql/createDatabase/create_database.sql'
 database = "ibd-pratical-work"
 
