@@ -1,5 +1,7 @@
 -- Consulta de postagens de um usuário: Recuperar todas as postagens feitas por um usuário específico, ordenadas por data de publicação (as mais recentes primeiro).
 
+USE `ibd-pratical-work`;
+
 SELECT 
     *
 FROM

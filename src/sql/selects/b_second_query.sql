@@ -1,5 +1,7 @@
 -- Consulta de conexões de um usuário: Obter a lista de amigos de um determinado usuário.
 
+USE `ibd-pratical-work`;
+
 SELECT 
     *
 FROM

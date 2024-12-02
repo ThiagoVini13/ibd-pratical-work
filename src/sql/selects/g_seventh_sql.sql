@@ -1,5 +1,7 @@
 -- Consulta de tendências: Listar o identificador dos 5 posts com mais interações nos últimos 7 dias.
 
+USE `ibd-pratical-work`;
+
 WITH post_usu AS (
     SELECT 
         pu.cod_post AS cod_post,

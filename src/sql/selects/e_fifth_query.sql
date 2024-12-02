@@ -1,5 +1,7 @@
 -- Consulta de mensagens privadas: Listar as 10 mensagens privadas mais recentes trocadas entre 2 usuários dados como entrada. 
 
+USE `ibd-pratical-work`;
+
 SELECT 
     *
 FROM

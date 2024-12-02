@@ -1,5 +1,7 @@
 -- Consulta de análise de engajamento: Dado um post de um usuário, fazer a contagem de quantos usuários interagiram com ele nos últimos 7 dias.
 
+USE `ibd-pratical-work`;    
+
 -- Consulta para usuários
 
 SELECT 
